@@ -13,5 +13,4 @@ public interface TrailRepository extends JpaRepository<Trail, Long> {
 
     Optional<Trail> findById(Long id);
     Optional<Trail> findByNameLike(String name);
-    List<Trail> findBy(Pageable pageable);
 }

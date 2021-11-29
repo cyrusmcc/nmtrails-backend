@@ -30,8 +30,8 @@ public class TrailServiceImpl implements TrailService {
     }
 
     @Override
-    public List<Trail> findBy(Pageable pageable) {
-        return repo.findBy(pageable);
+    public List<Trail> findAll(Pageable pageable) {
+        return repo.findAll(pageable).toList();
     }
 
 }

@@ -10,5 +10,5 @@ public interface TrailService {
 
     Trail findById(Long id);
     Trail findByNameLike(String name);
-    List<Trail> findBy(Pageable pageable);
+    List<Trail> findAll(Pageable pageable);
 }

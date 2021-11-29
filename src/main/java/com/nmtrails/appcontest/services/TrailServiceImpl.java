@@ -3,6 +3,7 @@ package com.nmtrails.appcontest.services;
 import com.nmtrails.appcontest.entities.Trail;
 import com.nmtrails.appcontest.repositories.TrailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -25,13 +26,9 @@ public class TrailServiceImpl implements TrailService {
     }
 
     @Override
-    public Trail findByNameLike(String name) {
-        return repo.findByNameLike(name).orElseThrow();
-    }
-
-    @Override
-    public List<Trail> findAll(Pageable pageable) {
-        return repo.findAll(pageable).toList();
+    public List<Trail> findAllByNameLike(String name, Pageable pageable) {
+        String nameLike = String.format("%%%s%%", name);
+        return repo.findAllByNameLike(nameLike, pageable).toList();
     }
 
 }

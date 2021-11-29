@@ -23,11 +23,11 @@ public class TrailController {
     }
 
     @GetMapping("/")
-    public List<Trail> listTrails(@RequestParam(required = false) String name,
+    public List<Trail> listTrails(@RequestParam(required = false, defaultValue = "") String name,
                                   @RequestParam(required = false, defaultValue = "0") int page,
                                   @RequestParam(required = false, defaultValue = "10") int pageSize) {
         PageRequest pr = PageRequest.of(page, pageSize);
-        return trailService.findAll(pr);
+        return trailService.findAllByNameLike(name, pr);
     }
 
     @GetMapping("/{id}")

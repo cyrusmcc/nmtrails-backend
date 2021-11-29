@@ -9,6 +9,5 @@ import java.util.Optional;
 public interface TrailService {
 
     Trail findById(Long id);
-    Trail findByNameLike(String name);
-    List<Trail> findAll(Pageable pageable);
+    List<Trail> findAllByNameLike(String name, Pageable pageable);
 }

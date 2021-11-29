@@ -1,7 +1,7 @@
 package com.nmtrails.appcontest.entities;
 
-import net.postgis.jdbc.geometry.LineString;
-import net.postgis.jdbc.geometry.Point;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.LineString;
 
 import javax.persistence.*;
 
@@ -21,10 +21,10 @@ public class Trail {
     private String name;
 
     @Column
-    private float avgRating;
+    private float avgRating = 0;
 
     @Column
-    private int ratings;
+    private int ratings = 0;
 
     @Column
     private Point trailhead;

@@ -64,6 +64,13 @@
 			<artifactId>postgis-jdbc</artifactId>
 			<version>2021.1.0</version>
 		</dependency>
+
+		<!-- for serializing/deserializing the geospatial data into/from GeoJSON -->
+		<dependency>
+			<groupId>org.n52.jackson</groupId>
+			<artifactId>jackson-datatype-jts</artifactId>
+			<version>1.2.7</version>
+		</dependency>
 	</dependencies>
 
 	<build>

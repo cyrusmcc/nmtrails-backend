@@ -1,5 +1,6 @@
 package com.nmtrails.appcontest.services;
 
+import com.nmtrails.appcontest.entities.Trail;
 import com.nmtrails.appcontest.entities.User;
 import com.nmtrails.appcontest.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -85,5 +87,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         userRepository.save(user);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 }

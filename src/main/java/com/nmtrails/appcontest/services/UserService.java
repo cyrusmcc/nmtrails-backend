@@ -1,5 +1,6 @@
 package com.nmtrails.appcontest.services;
 
+import com.nmtrails.appcontest.entities.Trail;
 import com.nmtrails.appcontest.entities.User;
 
 public interface UserService {
@@ -19,5 +20,7 @@ public interface UserService {
     void newUser(User user);
 
     void save(User user);
+
+    void deleteById(Long id);
 
 }

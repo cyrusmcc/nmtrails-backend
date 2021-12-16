@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TrailTest {
 
     @Autowired
-    private TrailRepository trailRepository;
+    TrailRepository trailRepository;
 
     @Test
     void contextLoads() {

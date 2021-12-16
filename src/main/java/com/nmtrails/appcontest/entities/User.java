@@ -1,7 +1,5 @@
 package com.nmtrails.appcontest.entities;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
@@ -34,15 +32,20 @@ public class User {
 
     private LocalDate userJoinDate;
 
-   // @ManyToMany(mappedBy = "wishListedUsers")
-   @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Trail> wishList = new HashSet<>();
 
-   // @ManyToMany(mappedBy = "hikedListUsers")
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Trail> hikedList = new HashSet<>();
 
     public User() {
+        this.role = EnumRole.ROLE_USER;
+    }
+
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
         this.role = EnumRole.ROLE_USER;
     }
 
@@ -101,7 +104,7 @@ public class User {
     public void addTrailToWishList(Trail trail) {
 
         if (wishList.contains(trail)) {
-            // TODO - add logging (investigate log4j vulnerability)
+            // TODO - add logging (investigate log4j vulnerability status)
             System.out.println("Trail already in wish list");
             throw new IllegalArgumentException();
         }
@@ -118,6 +121,24 @@ public class User {
 
     public void setWishList(Set<Trail> wishList) {
         this.wishList = wishList;
+    }
+
+    public void addTrailToHikedList(Trail trail) {
+
+        if (hikedList.contains(trail)) throw new IllegalArgumentException();
+
+        if (wishList.contains(trail)) {
+            wishList.remove(trail);
+            hikedList.add(trail);
+            return;
+        }
+
+        hikedList.add(trail);
+
+    }
+
+    public void removeTrailFromHikedList(Trail trail) {
+        if (hikedList.contains(trail)) hikedList.remove(trail);
     }
 
     public Set<Trail> getHikedList() {

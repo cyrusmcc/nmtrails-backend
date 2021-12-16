@@ -29,16 +29,6 @@ public class Trail {
     @Column
     private Point trailhead;
 
-    /*
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable
-    private Set<User> wishListedUsers = new HashSet<>();
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable
-    private Set<User> hikedListUsers = new HashSet<>();
-    */
-
     public Long getId() {
         return id;
     }
@@ -74,22 +64,4 @@ public class Trail {
     public void setRatings(int ratings) {
         this.ratings = ratings;
     }
-
-    /*
-    public Set<User> getWishListedUsers() {
-        return wishListedUsers;
-    }
-
-    public void setWishListedUsers(Set<User> wishListedUsers) {
-        this.wishListedUsers = wishListedUsers;
-    }
-
-    public Set<User> getHikedListUsers() {
-        return hikedListUsers;
-    }
-
-    public void setHikedListUsers(Set<User> hikedListUsers) {
-        this.hikedListUsers = hikedListUsers;
-    }
-    */
 }

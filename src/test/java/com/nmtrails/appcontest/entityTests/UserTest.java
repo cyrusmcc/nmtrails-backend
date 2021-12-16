@@ -1,5 +1,6 @@
 package com.nmtrails.appcontest.entityTests;
 
+import com.nmtrails.appcontest.controllers.UserController;
 import com.nmtrails.appcontest.entities.Trail;
 import com.nmtrails.appcontest.entities.User;
 import com.nmtrails.appcontest.repositories.TrailRepository;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
@@ -17,10 +19,13 @@ import java.util.Set;
 public class UserTest {
 
     @Autowired
-    private UserService userService;
+    UserService userService;
 
     @Autowired
-    private TrailRepository trailRepository;
+    TrailRepository trailRepository;
+
+    @Autowired
+    UserController userController;
 
     @Test
     void contextLoads() {
@@ -41,7 +46,6 @@ public class UserTest {
     void getUserByUsername() {
 
         User user = createUser();
-
         assert (userService.findByUsername("testuser").equals(user));
 
     }
@@ -62,6 +66,8 @@ public class UserTest {
         trailRepository.save(t2);
         wL.add(t2);
 
+        userService.save(user);
+
         for (Trail t : wL) System.out.println(t.getName());
 
         assert (user.getWishList().size() == 2);
@@ -73,7 +79,6 @@ public class UserTest {
     void userDoesNotHaveTrailInWishList() {
 
         User user = createUser();
-
         Set<Trail> wL = user.getWishList();
 
         Trail trail = new Trail();
@@ -102,7 +107,5 @@ public class UserTest {
         });
 
     }
-
-
 
 }

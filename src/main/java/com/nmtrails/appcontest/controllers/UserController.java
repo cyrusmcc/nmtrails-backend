@@ -1,5 +1,6 @@
 package com.nmtrails.appcontest.controllers;
 
+import com.nmtrails.appcontest.payload.responses.MessageResponse;
 import com.nmtrails.appcontest.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,12 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
 
+        if (!userService.existsById(id)) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("User does not exist"));
+        }
+
         return ResponseEntity.ok(userService.findById(id).getUsername());
 
     }
@@ -30,7 +37,9 @@ public class UserController {
     public ResponseEntity<?> getUserWishList(@PathVariable Long id) {
 
         if (!userService.existsById(id)) {
-            throw new IllegalArgumentException();
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("User does not exist"));
         }
 
         return ResponseEntity.ok(userService.findById(id).getWishList());
@@ -40,7 +49,9 @@ public class UserController {
     public ResponseEntity<?> getUserHikedTrails(@PathVariable Long id) {
 
         if (!userService.existsById(id)) {
-            throw new IllegalArgumentException();
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("User does not exist"));
         }
 
         return ResponseEntity.ok(userService.findById(id).getHikedList());

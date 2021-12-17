@@ -51,6 +51,11 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+			<version>2.5.4</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-spatial -->
 		<dependency>
@@ -71,7 +76,7 @@
 			<artifactId>jackson-datatype-jts</artifactId>
 			<version>1.2.7</version>
 		</dependency>
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>

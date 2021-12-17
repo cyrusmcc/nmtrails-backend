@@ -1,6 +1,6 @@
 package com.nmtrails.appcontest.controllers;
 
-import com.nmtrails.appcontest.entities.User;
+import com.nmtrails.appcontest.payload.responses.MessageResponse;
 import com.nmtrails.appcontest.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +23,38 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
 
+        if (!userService.existsById(id)) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("User does not exist"));
+        }
+
         return ResponseEntity.ok(userService.findById(id).getUsername());
 
+    }
+
+    @GetMapping("/wishlist/{id}")
+    public ResponseEntity<?> getUserWishList(@PathVariable Long id) {
+
+        if (!userService.existsById(id)) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("User does not exist"));
+        }
+
+        return ResponseEntity.ok(userService.findById(id).getWishList());
+    }
+
+    @GetMapping("/hikedList/{id}")
+    public ResponseEntity<?> getUserHikedTrails(@PathVariable Long id) {
+
+        if (!userService.existsById(id)) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("User does not exist"));
+        }
+
+        return ResponseEntity.ok(userService.findById(id).getHikedList());
     }
 
 }

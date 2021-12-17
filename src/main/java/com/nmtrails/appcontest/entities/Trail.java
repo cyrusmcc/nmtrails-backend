@@ -11,7 +11,7 @@ public class Trail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "trail_id")
     private Long id;
 
     @Column

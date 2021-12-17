@@ -1,0 +1,72 @@
+[
+    {
+        "type": "nps",
+        "name": "Aztec Ruins National Monument",
+        "bounds": [],
+        "name_key": "TRLNAME",
+        "dataset_id": "8f44ae991ea04f3e8aaf5b53a428aa5e_0"
+    },
+    {
+        "type": "nps",
+        "name": "Bandelier National Monument",
+        "bounds": [[35.803586, -106.337133], [35.757680, -106.233201]],
+        "name_key": "TRLNAME",
+        "dataset_id": "d9c4a36b97f34075bce23faf4a2512dc_0"
+    },
+    {
+        "type": "nps",
+        "name": "Capulin Volcano National Monument",
+        "bounds": [],
+        "name_key": "TRLNAME",
+        "dataset_id": "c91d53d80f8742bcbddc0f351bb9669c_0"
+    },
+    {
+        "type": "nps",
+        "name": "Carlsbad Caverns National Park",
+        "bounds": [],
+        "name_key": "TRLNAME",
+        "dataset_id": "e1b6ecd423b04d1289e5e926e17509f1_0"
+    },
+    {
+        "type": "nps",
+        "name": "El Malpais National Monument",
+        "bounds": [],
+        "name_key": "TRLNAME",
+        "dataset_id": "1657f0762a794db7a98ec90fb17498d7_0"
+    },
+    {
+        "type": "nps",
+        "name": "El Morro National Monument",
+        "bounds": [],
+        "name_key": "TRLNAME",
+        "dataset_id": "c43cc5464e28438d894a789bda97c97a_0"
+    },
+    {
+        "type": "nps",
+        "name": "Pecos National Historic Park",
+        "bounds": [],
+        "name_key": "TRLNAME",
+        "dataset_id": "8acf647372b9419b8ce8f88aedb6e8e0_0"
+    },
+    {
+        "type": "nps",
+        "name": "Salinas Pueblo Missions National Monument",
+        "bounds": [],
+        "name_key": "TRLNAME",
+        "dataset_id": "379710fd97514332a5b5705c34301240_0"
+    },
+    {
+        "type": "nps",
+        "name": "Valles Caldera National Preserve",
+        "bounds": [],
+        "name_key": "TRLNAME",
+        "dataset_id": "3e9fb9447c314ef693230cbc334c1bdb_0"
+    },
+    {
+        "type": "nps",
+        "name": "White Sands National Park",
+        "bounds": [],
+        "name_key": "TRLNAME",
+        "dataset_id": "8e819e4e850349ce8f7d37f64597d017_0"
+    }
+]

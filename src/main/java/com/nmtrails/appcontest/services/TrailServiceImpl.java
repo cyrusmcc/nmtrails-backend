@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TrailServiceImpl implements TrailService {
@@ -22,7 +23,9 @@ public class TrailServiceImpl implements TrailService {
 
     @Override
     public Trail findById(Long id) {
-        return repo.findById(id).get();
+        Optional<Trail> trail = repo.findById(id);
+        if (!trail.isPresent()) return trail.get();
+        throw new RuntimeException("Trail not found.");
     }
 
     @Override

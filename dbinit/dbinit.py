@@ -4,25 +4,34 @@ import requests
 import json
 import argparse
 
+USFS_API_FORMAT_STR = open("usfs.txt").read()
 
 class Region:
-    def __init__(self, name, bounds):
+    def __init__(self, name, name_key):
         self.name = name
-        self.bounds = bounds
+        self.name_key = name_key
 
 
 class NPSRegion(Region):
-    """
-    namekey refers to the key used to find the trail name in the particular
-    data source this region refers to, since each has a different one
-    """
-    def __init__(self, name, bounds, name_key, dataset_id):
-        super().__init__(name, bounds)
-        self.name_key = name_key
+    def __init__(self, name, dataset_id):
+        super().__init__(name, "TRLNAME")
         self.dataset_id = dataset_id
 
     def getAPIUrl(self):
         return "https://opendata.arcgis.com/datasets/" + self.dataset_id + ".geojson"
+
+
+class USFSRegion(Region):
+
+    def __init__(self, name, bounds):
+        super().__init__(name, "TRAIL_NAME")
+        self.bounds = bounds
+
+    def getAPIUrl(self):
+        bounds = self.bounds
+        return USFS_API_FORMAT_STR.format(
+            bounds[0][0], bounds[0][1], bounds[1][0], bounds[1][1]
+        )
 
 
 def load_regions(fp):
@@ -31,7 +40,11 @@ def load_regions(fp):
     for r in regions_json:
         if r["type"] == "nps":
             regions.append(NPSRegion(
-                r["name"], r["bounds"], r["name_key"], r["dataset_id"]
+                r["name"], r["dataset_id"]
+            ))
+        elif r["type"] == "usfs":
+            regions.append(USFSRegion(
+                r["name"], r["bounds"]
             ))
     return regions
 
@@ -48,6 +61,12 @@ def decompose_multi_line_string(geom):
         linestrings.append(json.dumps(ls))
     return linestrings
 
+def process_geometry(geom, trails, name):
+    if geom["type"] == "MultiLineString":
+        trails[name].extend(decompose_multi_line_string(geom))
+    else:
+        trails[name].append(json.dumps(geom))
+
 # returns a dictionary, where the key is the trail name and the value is a list of all of
 # the geometry segments (in the form of a GeoJSON string)
 def extract_trails(region, geojson):
@@ -57,11 +76,7 @@ def extract_trails(region, geojson):
         geom = f["geometry"]
         if not name in trails:
             trails[name] = []
-
-        if geom["type"] == "MultiLineString":
-            trails[name].extend(decompose_multi_line_string(geom))
-        else:
-            trails[name].append(json.dumps(geom))
+        process_geometry(geom, trails, name)
     return trails
 
 def create_database(args):

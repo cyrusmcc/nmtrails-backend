@@ -4,6 +4,8 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.LineString;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="trails")
@@ -15,9 +17,6 @@ public class Trail {
     private Long id;
 
     @Column
-    private LineString track;
-
-    @Column
     private String name;
 
     @Column
@@ -26,15 +25,11 @@ public class Trail {
     @Column
     private int ratings = 0;
 
-    @Column
-    private Point trailhead;
+    @OneToMany(mappedBy = "trail", fetch = FetchType.LAZY)
+    private Set<Segment> segments = new HashSet<>();
 
     public Long getId() {
         return id;
-    }
-
-    public LineString getTrack() {
-        return track;
     }
 
     public String getName() {
@@ -49,10 +44,6 @@ public class Trail {
         return ratings;
     }
 
-    public Point getTrailhead() {
-        return trailhead;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -63,5 +54,9 @@ public class Trail {
 
     public void setRatings(int ratings) {
         this.ratings = ratings;
+    }
+
+    public Set<Segment> getSegments() {
+        return segments;
     }
 }

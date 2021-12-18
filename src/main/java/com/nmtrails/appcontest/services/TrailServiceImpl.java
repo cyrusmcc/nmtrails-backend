@@ -31,4 +31,9 @@ public class TrailServiceImpl implements TrailService {
         return repo.findAllByNameLike(nameLike, pageable).toList();
     }
 
+    @Override
+    public boolean existsById(Long id) {
+        return repo.existsById(id);
+    }
+
 }

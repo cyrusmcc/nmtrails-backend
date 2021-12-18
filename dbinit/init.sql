@@ -6,26 +6,26 @@ CREATE TABLE users (
 );
 
 CREATE TABLE trails (
-    id serial PRIMARY KEY,
+    trail_id serial PRIMARY KEY,
     avg_rating real,
     name varchar,
-    region int,
+    region_id int,
     ratings int
 );
 
 CREATE TABLE segments (
-    id serial PRIMARY KEY,
-    trail int,
+    segment_id serial PRIMARY KEY,
+    trail_id int,
     track geometry(LineString)
 );
 
 CREATE TABLE trailheads (
-    id serial PRIMARY KEY,
+    trailhead_id serial PRIMARY KEY,
     trail int,
     point geometry(Point)
 );
 
 CREATE TABLE regions (
-    id serial PRIMARY KEY,
+    region_id serial PRIMARY KEY,
     name varchar
 );

@@ -75,19 +75,19 @@ def create_database(args):
 
 def add_trails_to_db(trails, cursor, regionid):
     for trail in trails:
-        query = """INSERT INTO trails (avg_rating, name, ratings, region) 
-                   VALUES (0, %s, 0, %s) RETURNING id"""
+        query = """INSERT INTO trails (avg_rating, name, ratings, region_region_id)
+                   VALUES (0, %s, 0, %s) RETURNING trail_id"""
         cursor.execute(query, [trail, regionid])
 
         trail_id = cursor.fetchone()[0]
         for segment in trails[trail]:
             #print(segment)
-            query = """INSERT INTO segments (trail, track) VALUES
+            query = """INSERT INTO segments (trail_trail_id, track) VALUES
                      (%s, ST_Force2D(ST_GeomFromGeoJSON(%s)))"""
             cursor.execute(query, [trail_id, segment])
 
 def add_region_to_db(region, cursor):
-    query = "INSERT INTO regions (name) VALUES (%s) RETURNING id"
+    query = "INSERT INTO regions (name) VALUES (%s) RETURNING region_id"
     cursor.execute(query, [region.name])
     return cursor.fetchone()[0]
 

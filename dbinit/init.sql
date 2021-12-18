@@ -1,26 +1,21 @@
 CREATE EXTENSION postgis;
 
-CREATE TABLE users (
-    user_id serial PRIMARY KEY,
-    username varchar(255)
-);
-
 CREATE TABLE trails (
-    trail_id serial PRIMARY KEY,
-    avg_rating real,
-    name varchar,
-    region_id int,
-    ratings int
+    trail_id bigserial PRIMARY KEY,
+    avg_rating float4,
+    name varchar(255),
+    region_region_id int8,
+    ratings int4
 );
 
 CREATE TABLE segments (
-    segment_id serial PRIMARY KEY,
-    trail_id int,
+    segment_id bigserial PRIMARY KEY,
+    trail_trail_id int8,
     track geometry(LineString)
 );
 
 CREATE TABLE trailheads (
-    trailhead_id serial PRIMARY KEY,
+    id serial PRIMARY KEY,
     trail int,
     point geometry(Point)
 );

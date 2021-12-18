@@ -28,6 +28,9 @@ public class Trail {
     @OneToMany(mappedBy = "trail", fetch = FetchType.LAZY)
     private Set<Segment> segments = new HashSet<>();
 
+    @ManyToOne
+    private Region region;
+
     public Long getId() {
         return id;
     }

@@ -34,4 +34,9 @@ public class RegionController {
         Region region = service.findById(id);
         return region.getTrails();
     }
+
+    @GetMapping("/featured")
+    public RegionView featuredRegion() {
+        return service.randomRegion();
+    }
 }

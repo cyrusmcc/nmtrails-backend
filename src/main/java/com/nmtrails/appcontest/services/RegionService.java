@@ -10,4 +10,5 @@ public interface RegionService {
 
     Region findById(Long id);
     List<RegionView> findAll(Pageable pageable);
+    RegionView randomRegion();
 }

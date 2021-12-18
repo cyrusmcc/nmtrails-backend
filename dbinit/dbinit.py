@@ -73,6 +73,11 @@ def extract_trails(region, geojson):
     trails = {}
     for f in geojson["features"]:
         name = f["properties"][region.name_key]
+        if name is None:
+            name = ""
+        name = name.title()
+        if "Trail" not in name:
+            name = name + " Trail"
         geom = f["geometry"]
         if not name in trails:
             trails[name] = []

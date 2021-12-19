@@ -25,6 +25,12 @@ public class Trail {
     @Column
     private int ratings = 0;
 
+    @Column
+    private String imageUrl;
+
+    @Column
+    private boolean hasImage = false;
+
     @OneToMany(mappedBy = "trail", fetch = FetchType.LAZY)
     private Set<Segment> segments = new HashSet<>();
 
@@ -61,5 +67,19 @@ public class Trail {
 
     public Set<Segment> getSegments() {
         return segments;
+    }
+
+    public String getImageUrl() {return this.imageUrl;}
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public boolean hasImage() {
+        return hasImage;
+    }
+
+    public void setHasImage(boolean hasImage) {
+        this.hasImage = hasImage;
     }
 }

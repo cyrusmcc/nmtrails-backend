@@ -88,7 +88,8 @@ public class TrailServiceImpl implements TrailService {
                     }
                 }).block();
 
-        trail.setImageUrl(getLinkFromJson(clientResponse));
+        String link = getLinkFromJson(clientResponse);
+        if (link.length() <= 1000) trail.setImageUrl(link);
         trail.setHasImage(true);
         this.repo.save(trail);
     }

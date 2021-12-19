@@ -4,6 +4,7 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.LineString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,7 +26,7 @@ public class Trail {
     @Column
     private int ratings = 0;
 
-    @Column
+    @Column(length = 1000)
     private String imageUrl;
 
     @Column

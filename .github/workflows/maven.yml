@@ -41,6 +41,8 @@ jobs:
         DB_PASS: password
         DB_USER: postgres
         DB_PORT: 5432
+        GOOGLE_API_KEY: NA
+        GOOGLE_ENGINE_ID: NA
     - name: Test
       run: mvn verify
       env:
@@ -48,3 +50,5 @@ jobs:
         DB_PASS: password
         DB_USER: postgres
         DB_PORT: 5432
+        GOOGLE_API_KEY: NA
+        GOOGLE_ENGINE_ID: NA

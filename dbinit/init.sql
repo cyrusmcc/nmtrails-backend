@@ -5,7 +5,8 @@ CREATE TABLE trails (
     avg_rating float4,
     name varchar(255),
     region_region_id int8,
-    ratings int4
+    ratings int4,
+    has_image boolean DEFAULT false
 );
 
 CREATE TABLE segments (

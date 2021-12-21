@@ -104,6 +104,9 @@ public class TrailServiceImpl implements TrailService {
             e.printStackTrace();
         }
 
+        // if the request resulted in an error, don't bother loading an image url
+        if (map.containsKey("error")) return null;
+
         List<Object> items = (List<Object>) map.get("items");
         String link = (String) ((Map<String, Object>) items.get(0)).get("link");
         System.out.println(link);

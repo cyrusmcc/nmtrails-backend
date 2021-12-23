@@ -1,6 +1,7 @@
 package com.nmtrails.appcontest.services;
 
 import com.nmtrails.appcontest.entities.Trail;
+import org.locationtech.jts.geom.Geometry;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface TrailService {
     Trail findById(Long id);
     List<Trail> findAllByNameLike(String name, Pageable pageable);
     boolean existsById(Long id);
+    Geometry findExtent(List<Long> ids);
 }

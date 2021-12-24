@@ -1,0 +1,1 @@
+https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_TrailNFSPublish_01/MapServer/0/query?where=1%3D1&outFields=*&geometry={}%2C{}%2C{}%2C{}&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=geojson

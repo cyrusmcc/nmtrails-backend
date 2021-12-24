@@ -4,7 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nmtrails.appcontest.entities.Trail;
+import com.nmtrails.appcontest.repositories.SegmentRepository;
 import com.nmtrails.appcontest.repositories.TrailRepository;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKTReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
@@ -21,23 +26,30 @@ import java.util.Optional;
 @Service
 public class TrailServiceImpl implements TrailService {
 
-    TrailRepository repo;
+    TrailRepository trailRepository;
+    SegmentRepository segmentRepository;
     WebClient webclient;
+    GeometryFactory factory;
 
     private String gApiKey;
     private String gEngineId;
 
     @Autowired
-    public TrailServiceImpl(TrailRepository repo, WebClient webclient, Environment env) {
-        this.repo = repo;
+    public TrailServiceImpl(TrailRepository trailRepository,
+                            SegmentRepository segmentRepository,
+                            WebClient webclient,
+                            Environment env) {
+        this.trailRepository = trailRepository;
+        this.segmentRepository = segmentRepository;
         this.webclient = webclient;
+        this.factory = new GeometryFactory();
         this.gApiKey = env.getProperty("google.api_key");
         this.gEngineId = env.getProperty("google.engine_id");
     }
 
     @Override
     public Trail findById(Long id) {
-        Optional<Trail> trail = repo.findById(id);
+        Optional<Trail> trail = trailRepository.findById(id);
         if (trail.isPresent()) {
             Trail t = trail.get();
             lazyLoadImageUrl(t);
@@ -49,7 +61,7 @@ public class TrailServiceImpl implements TrailService {
     @Override
     public List<Trail> findAllByNameLike(String name, Pageable pageable) {
         String nameLike = String.format("%%%s%%", name);
-        List<Trail> result = repo.findAllByNameLike(nameLike, pageable).toList();
+        List<Trail> result = trailRepository.findAllByNameLike(nameLike, pageable).toList();
         for (Trail t : result) {
             lazyLoadImageUrl(t);
         }
@@ -57,8 +69,20 @@ public class TrailServiceImpl implements TrailService {
     }
 
     @Override
+    public Geometry findExtent(List<Long> ids) {
+        WKTReader reader = new WKTReader(factory);
+        try {
+            return reader.read(segmentRepository.findTrailsExtent(ids));
+        } catch (ParseException e) {
+            //TODO log
+            e.printStackTrace();
+        }
+        throw new RuntimeException("Could not parse geometry");
+    }
+
+    @Override
     public boolean existsById(Long id) {
-        return repo.existsById(id);
+        return trailRepository.existsById(id);
     }
 
     /*
@@ -91,7 +115,7 @@ public class TrailServiceImpl implements TrailService {
         String link = getLinkFromJson(clientResponse);
         if (link.length() <= 1000) trail.setImageUrl(link);
         trail.setHasImage(true);
-        this.repo.save(trail);
+        this.trailRepository.save(trail);
     }
 
     private String getLinkFromJson(String json) {

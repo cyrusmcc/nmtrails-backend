@@ -43,6 +43,7 @@ jobs:
         DB_PORT: 5432
         GOOGLE_API_KEY: NA
         GOOGLE_ENGINE_ID: NA
+        JWT_SECRET: NA
     - name: Test
       run: mvn verify
       env:
@@ -52,3 +53,5 @@ jobs:
         DB_PORT: 5432
         GOOGLE_API_KEY: NA
         GOOGLE_ENGINE_ID: NA
+        JWT_SECRET: NA
+

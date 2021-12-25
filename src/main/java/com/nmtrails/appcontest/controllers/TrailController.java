@@ -32,6 +32,9 @@ public class TrailController {
                                   @RequestParam(required = false, defaultValue = "0") int page,
                                   @RequestParam(required = false, defaultValue = "10") int pageSize) {
         PageRequest pr = PageRequest.of(page, pageSize);
+        if (name == null) name = "";
+        System.out.println(name + " " + page);
+
         return trailService.findAllByNameLike(name, pr);
     }
 

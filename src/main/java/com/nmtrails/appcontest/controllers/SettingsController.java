@@ -4,6 +4,7 @@ import com.nmtrails.appcontest.entities.Mail;
 import com.nmtrails.appcontest.entities.User;
 import com.nmtrails.appcontest.payload.requests.HandlePasswordResetRequest;
 import com.nmtrails.appcontest.payload.requests.LostPasswordResetRequest;
+import com.nmtrails.appcontest.payload.requests.PasswordChangeRequest;
 import com.nmtrails.appcontest.payload.requests.ValidatePasswordResetTokenRequest;
 import com.nmtrails.appcontest.payload.responses.MessageResponse;
 import com.nmtrails.appcontest.security.JWT.JwtUtils;
@@ -14,6 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -96,6 +100,42 @@ public class SettingsController {
         else return ResponseEntity
                 .badRequest()
                 .body(new MessageResponse("Invalid password reset token, please try again"));
+
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePasswordRequest(@Valid @RequestBody PasswordChangeRequest request) {
+
+        System.out.println("yes");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+
+            if (request.getCurrentPassword() == request.getNewPassword()) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Current and new password must be different."));
+            }
+
+            User user = userService.findByUsername(authentication.getName());
+
+            if (!userService.isValidPassword(user, request.getCurrentPassword())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Invalid entry for current password"));
+            }
+
+            userService.updatePassword(user, request.getNewPassword());
+            userService.save(user);
+
+            System.out.println("ok");
+            return ResponseEntity.ok(new MessageResponse("Account password has been updated."));
+
+        }
+
+        return ResponseEntity
+                .badRequest()
+                .body(new MessageResponse("Error encountered while processing password reset," +
+                        " please try again"));
 
     }
 

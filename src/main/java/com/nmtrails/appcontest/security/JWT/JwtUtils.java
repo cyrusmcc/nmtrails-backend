@@ -40,14 +40,46 @@ public class JwtUtils {
                 .compact();
     }
 
+    public String generateTokenFromUsernameAndUserSecret(String username, String secret) {
+        return Jwts.builder().setSubject(username).setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
+
+    public String generateTokenFromUsernameAndUserSecretWithPayload(String username, String secret, String payload) {
+        return Jwts.builder().setSubject(username).setIssuedAt(new Date())
+                .claim("newEmail", payload)
+                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
+
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
+    public Claims getClaimsFromJwtToken(String token, String secret) {
+
+        if (secret.isEmpty() || secret.equals(""))
+            secret = jwtSecret;
+
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+    }
+
     public boolean validateJwtToken(String authToken) {
 
+        return performValidationChecks(authToken, jwtSecret);
+    }
+
+    public boolean validateJwtToken(String authToken, String userSecret) {
+
+        return performValidationChecks(authToken, userSecret);
+    }
+
+    private boolean performValidationChecks(String authToken, String userSecret) {
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(userSecret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
             log.error("Invalid JWT signature: {}", e.getMessage());

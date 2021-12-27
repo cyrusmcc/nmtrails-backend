@@ -1,10 +1,7 @@
 package com.nmtrails.appcontest.entities;
 
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.geom.LineString;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 

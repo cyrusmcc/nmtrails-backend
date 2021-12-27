@@ -44,10 +44,6 @@ jobs:
         GOOGLE_API_KEY: NA
         GOOGLE_ENGINE_ID: NA
         JWT_SECRET: NA
-        EMAIL_HOST: NA
-        EMAIL_PORT: NA
-        EMAIL_USER: NA
-        EMAIL_PASSWORD: NA
     - name: Test
       run: mvn verify
       env:
@@ -58,8 +54,4 @@ jobs:
         GOOGLE_API_KEY: NA
         GOOGLE_ENGINE_ID: NA
         JWT_SECRET: NA
-        EMAIL_HOST: NA
-        EMAIL_PORT: NA
-        EMAIL_USER: NA
-        EMAIL_PASSWORD: NA
 

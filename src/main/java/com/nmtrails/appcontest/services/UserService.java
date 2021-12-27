@@ -1,6 +1,9 @@
 package com.nmtrails.appcontest.services;
 
+import com.nmtrails.appcontest.entities.Trail;
 import com.nmtrails.appcontest.entities.User;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -21,9 +24,5 @@ public interface UserService {
     void save(User user);
 
     void deleteById(Long id);
-
-    void updatePassword(User user, String password);
-
-    boolean isValidPassword(User user, String password);
 
 }

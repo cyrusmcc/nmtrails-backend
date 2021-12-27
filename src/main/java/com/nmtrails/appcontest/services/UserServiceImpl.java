@@ -3,7 +3,6 @@ package com.nmtrails.appcontest.services;
 import com.nmtrails.appcontest.entities.User;
 import com.nmtrails.appcontest.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,12 +14,9 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
-    private PasswordEncoder passwordEncoder;
-
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -74,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean existsByEmail(String email) {
-        if (userRepository.existsByEmail(email)) return true;
+        if (userRepository.existsByEmail(email));
         return false;
     }
 
@@ -95,24 +91,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
-    }
-
-    @Override
-    public void updatePassword(User user, String password) {
-
-        String encodedPass = passwordEncoder.encode(password);
-        user.setPassword(encodedPass);
-        userRepository.save(user);
-
-    }
-
-    @Override
-    public boolean isValidPassword(User user, String password) {
-
-        if (passwordEncoder.matches(password, user.getPassword()))
-            return true;
-
-        return false;
     }
 
 }

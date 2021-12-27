@@ -2,14 +2,12 @@ package com.nmtrails.appcontest.controllers;
 
 import com.nmtrails.appcontest.entities.Mail;
 import com.nmtrails.appcontest.entities.User;
-import com.nmtrails.appcontest.payload.requests.HandlePasswordResetRequest;
-import com.nmtrails.appcontest.payload.requests.LostPasswordResetRequest;
-import com.nmtrails.appcontest.payload.requests.PasswordChangeRequest;
-import com.nmtrails.appcontest.payload.requests.ValidatePasswordResetTokenRequest;
+import com.nmtrails.appcontest.payload.requests.*;
 import com.nmtrails.appcontest.payload.responses.MessageResponse;
 import com.nmtrails.appcontest.security.JWT.JwtUtils;
 import com.nmtrails.appcontest.services.MailService;
 import com.nmtrails.appcontest.services.UserService;
+import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +104,6 @@ public class SettingsController {
     @PostMapping("/change-password")
     public ResponseEntity<?> changePasswordRequest(@Valid @RequestBody PasswordChangeRequest request) {
 
-        System.out.println("yes");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
 
@@ -127,7 +124,6 @@ public class SettingsController {
             userService.updatePassword(user, request.getNewPassword());
             userService.save(user);
 
-            System.out.println("ok");
             return ResponseEntity.ok(new MessageResponse("Account password has been updated."));
 
         }
@@ -141,8 +137,6 @@ public class SettingsController {
 
     @PostMapping("/handle-password-reset")
     public ResponseEntity<?> handlePasswordReset(@Valid @RequestBody HandlePasswordResetRequest handlePassResetReq) {
-
-            System.out.println("handle");
 
             if (!userService.existsById(handlePassResetReq.getUserId())) {
                 return ResponseEntity
@@ -166,4 +160,93 @@ public class SettingsController {
                 .body(new MessageResponse("An issue was encountered while trying to reset your password."));
     }
 
+    @PostMapping("/email-change-request")
+    public ResponseEntity<?> emailChangeRequest(@Valid @RequestBody EmailChangeRequest emailChangeRequest,
+                                                HttpServletRequest request) {
+
+        System.out.println(emailChangeRequest.getPassword());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+
+            if (userService.existsByEmail(emailChangeRequest.getEmail())) {
+                log.info("User attempted to change email but email already in use");
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Email already in use"));
+            }
+
+            User user = userService.findByUsername(authentication.getName());
+
+            if (!userService.isValidPassword(user, emailChangeRequest.getPassword())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Invalid password, please try again"));
+            }
+
+            String userSecret = user.getEmail() + "-" + user.getPassword();
+
+            String token = jwtUtils.generateTokenFromUsernameAndUserSecretWithPayload(
+                    user.getUsername(), userSecret, emailChangeRequest.getEmail());
+
+            Mail mail = new Mail();
+            mail.setFrom(emailSendAdd);
+            mail.setTo(emailChangeRequest.getEmail());
+            mail.setSubject("Change email request");
+
+            Map<String, Object> model = new HashMap<>();
+            model.put("token", token);
+            model.put("user", user);
+            model.put("signature", "a signature here");
+            // replace 3000 w/ request.getServerPort() when done testing;
+            String url = request.getScheme() + "://" + request.getServerName() + ":" + 3000;
+            model.put("resetUrl", url + "/email-change-confirmation/" + user.getId() + "/" + token);
+            mail.setModel(model);
+            mailService.sendEmail(mail);
+
+            log.info("User requested an email change");
+
+            return ResponseEntity.ok(new MessageResponse("A confirmation email will be sent to your new address. Click" +
+                    " the link provided link to update your email."));
+
+        }
+
+        return ResponseEntity
+                .badRequest()
+                .body(new MessageResponse("Error encountered while processing email reset request," +
+                        " please try again"));
+
+    }
+
+    @PostMapping("/handle-email-change")
+    public ResponseEntity<?> handleEmailChange(@Valid @RequestBody HandleChangeEmailRequest request) {
+
+        System.out.println("in");
+        if (!userService.existsById(request.getUserId()))
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Invalid email change request, please try again"));
+
+        User user = userService.findById(request.getUserId());
+        String userSecret = user.getEmail() + "-" + user.getPassword();
+
+        if (jwtUtils.validateJwtToken(request.getToken(), userSecret)) {
+
+            String newEmail = jwtUtils
+                    .getClaimsFromJwtToken(request.getToken(), userSecret)
+                    .get("newEmail")
+                    .toString();
+
+            user.setEmail(newEmail);
+            userService.save(user);
+
+            log.info("User successfully changed email");
+            return ResponseEntity.ok(new MessageResponse("Email successfully changed."));
+        }
+
+        return ResponseEntity
+                .badRequest()
+                .body(new MessageResponse("Error encountered while processing email change," +
+                        " please try again"));
+    }
 }

@@ -45,7 +45,7 @@ jobs:
         GOOGLE_ENGINE_ID: NA
         JWT_SECRET: NA
         EMAIL_HOST: NA
-        EMAIL_PORT: NA
+        EMAIL_PORT: 0
         EMAIL_USER: NA
         EMAIL_PASSWORD: NA
     - name: Test
@@ -59,7 +59,7 @@ jobs:
         GOOGLE_ENGINE_ID: NA
         JWT_SECRET: NA
         EMAIL_HOST: NA
-        EMAIL_PORT: NA
+        EMAIL_PORT: 0
         EMAIL_USER: NA
         EMAIL_PASSWORD: NA
 

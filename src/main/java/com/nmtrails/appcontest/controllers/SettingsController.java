@@ -164,8 +164,6 @@ public class SettingsController {
     public ResponseEntity<?> emailChangeRequest(@Valid @RequestBody EmailChangeRequest emailChangeRequest,
                                                 HttpServletRequest request) {
 
-        System.out.println(emailChangeRequest.getPassword());
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
 
@@ -221,7 +219,6 @@ public class SettingsController {
     @PostMapping("/handle-email-change")
     public ResponseEntity<?> handleEmailChange(@Valid @RequestBody HandleChangeEmailRequest request) {
 
-        System.out.println("in");
         if (!userService.existsById(request.getUserId()))
             return ResponseEntity
                     .badRequest()

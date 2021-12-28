@@ -33,7 +33,7 @@ public class User {
     private LocalDate userJoinDate;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Trail> wishList = new HashSet<>();
+    private Set<Trail> toHikeList = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Trail> hikedList = new HashSet<>();
@@ -97,40 +97,38 @@ public class User {
         this.userJoinDate = userJoinDate;
     }
 
-    public Set<Trail> getWishList() {
-        return wishList;
+    public Set<Trail> getToHikeList() {
+        return toHikeList;
     }
 
-    public void addTrailToWishList(Trail trail) {
+    public void addTrailToHikeList(Trail trail) {
 
-        if (wishList.contains(trail)) {
+        if (toHikeList.contains(trail)) {
             // TODO - add logging (investigate log4j vulnerability status)
             System.out.println("Trail already in wish list");
             throw new IllegalArgumentException();
         }
-        wishList.add(trail);
+        toHikeList.add(trail);
     }
 
-    public boolean hasTrailInWishList(Trail trail) {
-        return wishList.contains(trail);
+    public boolean hasTrailInToHikeList(Trail trail) {
+        return toHikeList.contains(trail);
     }
 
-    public void removeTrailFromWishlist(Trail trail) {
-        if (wishList.contains(trail)) wishList.remove(trail);
+    public void removeTrailFromToHikeList(Trail trail) {
+        if (toHikeList.contains(trail)) toHikeList.remove(trail);
     }
 
-    public void setWishList(Set<Trail> wishList) {
-        this.wishList = wishList;
+    public void setToHikeList(Set<Trail> wishList) {
+        this.toHikeList = wishList;
     }
 
     public void addTrailToHikedList(Trail trail) {
 
         if (hikedList.contains(trail)) throw new IllegalArgumentException();
 
-        if (wishList.contains(trail)) {
-            wishList.remove(trail);
-            hikedList.add(trail);
-            return;
+        if (toHikeList.contains(trail)) {
+            toHikeList.remove(trail);
         }
 
         hikedList.add(trail);

@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 public class LostPasswordResetRequest {
 
     @NotBlank
-    String email;
+    private String email;
 
     public String getEmail() {
         return email;

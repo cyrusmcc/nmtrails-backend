@@ -6,13 +6,13 @@ import javax.validation.constraints.NotNull;
 public class HandlePasswordResetRequest {
 
     @NotBlank
-    String password;
+    private String password;
 
     @NotNull
-    Long userId;
+    private Long userId;
 
     @NotBlank
-    String token;
+    private String token;
 
     public String getPassword() {
         return password;

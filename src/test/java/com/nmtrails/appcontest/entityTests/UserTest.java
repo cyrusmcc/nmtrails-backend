@@ -54,7 +54,7 @@ public class UserTest {
     void userHasWishListTrails() {
 
         User user = createUser();
-        Set<Trail> wL = user.getWishList();
+        Set<Trail> wL = user.getToHikeList();
 
         Trail t1 = new Trail();
         t1.setName("t1");
@@ -70,8 +70,8 @@ public class UserTest {
 
         for (Trail t : wL) System.out.println(t.getName());
 
-        assert (user.getWishList().size() == 2);
-        assert (user.getWishList().contains(t1) && user.getWishList().contains(t2));
+        assert (user.getToHikeList().size() == 2);
+        assert (user.getToHikeList().contains(t1) && user.getToHikeList().contains(t2));
 
     }
 
@@ -79,7 +79,7 @@ public class UserTest {
     void userDoesNotHaveTrailInWishList() {
 
         User user = createUser();
-        Set<Trail> wL = user.getWishList();
+        Set<Trail> wL = user.getToHikeList();
 
         Trail trail = new Trail();
         trail.setName("testTrail");
@@ -97,13 +97,13 @@ public class UserTest {
         Trail trail = new Trail();
         trail.setName("testTrail");
         trailRepository.save(trail);
-        user.addTrailToWishList(trail);
+        user.addTrailToHikeList(trail);
         userService.save(user);
 
-        assert (user.hasTrailInWishList(trail));
+        assert (user.hasTrailInToHikeList(trail));
 
         Assertions.assertThrows (IllegalArgumentException.class, () -> {
-                user.addTrailToWishList(trail);
+                user.addTrailToHikeList(trail);
         });
 
     }

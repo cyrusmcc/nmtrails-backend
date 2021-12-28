@@ -6,10 +6,10 @@ import javax.validation.constraints.NotNull;
 public class ValidatePasswordResetTokenRequest {
 
     @NotNull
-    Long userId;
+    private Long userId;
 
     @NotBlank
-    String token;
+    private String token;
 
     public Long getUserId() {
         return userId;

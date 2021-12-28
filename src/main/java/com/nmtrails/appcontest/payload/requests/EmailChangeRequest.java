@@ -5,10 +5,10 @@ import javax.validation.constraints.NotBlank;
 public class EmailChangeRequest {
 
     @NotBlank
-    String email;
+    private String email;
 
     @NotBlank
-    String password;
+    private String password;
 
     public String getEmail() {
         return email;

@@ -5,10 +5,10 @@ import javax.validation.constraints.NotBlank;
 public class PasswordChangeRequest {
 
     @NotBlank
-    String currentPassword;
+    private String currentPassword;
 
     @NotBlank
-    String newPassword;
+    private String newPassword;
 
     public String getCurrentPassword() {
         return currentPassword;

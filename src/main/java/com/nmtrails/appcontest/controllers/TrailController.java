@@ -48,7 +48,32 @@ public class TrailController {
     }
 
     @GetMapping("/extent")
-    public Geometry getExtent(@RequestParam(defaultValue = "") List<Long> ids) {
-        return trailService.findExtent(ids);
+    public ResponseEntity<?> getExtent(@RequestParam(defaultValue = "") List<Long> ids) {
+
+        if (ids == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error encountered while retrieving map data"));
+        }
+
+        return ResponseEntity.ok(trailService.findExtent(ids));
     }
+
+    @GetMapping("/popular")
+    public ResponseEntity<?> getPopularTrails(@RequestParam(required = false, defaultValue = "0") int page,
+                                              @RequestParam(required = false, defaultValue = "5") int pageSize) {
+
+        List<Trail> list = trailService.findAllByRatingsDesc(page, pageSize);
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/featured")
+    public ResponseEntity<?> getFeaturedTrails() {
+
+        return ResponseEntity.ok(trailService.getRandomTrails(3));
+    }
+
+
+
 }

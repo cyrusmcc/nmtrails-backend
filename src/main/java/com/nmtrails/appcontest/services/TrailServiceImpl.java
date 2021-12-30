@@ -12,16 +12,14 @@ import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class TrailServiceImpl implements TrailService {
@@ -70,6 +68,9 @@ public class TrailServiceImpl implements TrailService {
 
     @Override
     public Geometry findExtent(List<Long> ids) {
+
+        if (ids == null || ids.size() == 0) throw new IllegalArgumentException();
+
         WKTReader reader = new WKTReader(factory);
         try {
             return reader.read(segmentRepository.findTrailsExtent(ids));
@@ -123,7 +124,8 @@ public class TrailServiceImpl implements TrailService {
         Map<String, Object> map = new HashMap<>();
 
         try {
-            map = om.readValue(json, new TypeReference<Map<String, Object>>() {});
+            map = om.readValue(json, new TypeReference<Map<String, Object>>() {
+            });
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -133,7 +135,46 @@ public class TrailServiceImpl implements TrailService {
 
         List<Object> items = (List<Object>) map.get("items");
         String link = (String) ((Map<String, Object>) items.get(0)).get("link");
-        System.out.println(link);
         return link;
+    }
+
+    public void save(Trail trail) {
+        trailRepository.save(trail);
+    }
+
+    @Override
+    public List<Trail> findAllByRatingsDesc(Integer pageNum, Integer pageSize) {
+
+        Pageable paging = PageRequest.of(pageNum, pageSize, Sort.by("ratings").descending());
+
+        Slice<Trail> sliceResult = trailRepository.findAll(paging);
+
+        if (sliceResult.hasContent()) {
+            return sliceResult.getContent();
+        } else return new ArrayList<>();
+
+    }
+
+    @Override
+    public List<Trail> getRandomTrails(int numRandom) {
+
+        List<Trail> randomTrails = new ArrayList<>();
+
+        for (int i = 0; i < numRandom; i++) {
+
+            long randomId = ThreadLocalRandom.current().nextLong(10);
+            Trail t = trailRepository.findById(randomId).get();
+
+            while (randomTrails.contains(t)) {
+                randomId = ThreadLocalRandom.current().nextLong(10);
+                if (trailRepository.existsById(randomId))
+                    t = trailRepository.findById(randomId).get();
+                else continue;
+            }
+
+            randomTrails.add(t);
+        }
+
+        return randomTrails;
     }
 }

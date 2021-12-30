@@ -2,7 +2,8 @@ CREATE EXTENSION postgis;
 
 CREATE TABLE trails (
     trail_id bigserial PRIMARY KEY,
-    avg_rating float4,
+    sum_of_ratings int4,
+    avg_rating float8,
     name varchar(255),
     region_region_id int8,
     ratings int4,

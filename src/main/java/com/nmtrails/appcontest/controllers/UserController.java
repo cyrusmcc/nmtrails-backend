@@ -1,5 +1,6 @@
 package com.nmtrails.appcontest.controllers;
 
+import com.nmtrails.appcontest.entities.Trail;
 import com.nmtrails.appcontest.entities.User;
 import com.nmtrails.appcontest.payload.requests.AddTrailToHikeListRequest;
 import com.nmtrails.appcontest.payload.requests.RemoveTrailFromToHikeListRequest;
@@ -79,8 +80,6 @@ public class UserController {
     @PostMapping("/add-trail-to-hike-list")
     public ResponseEntity<?> addTrailToHikeList(@RequestBody AddTrailToHikeListRequest request) {
 
-        System.out.println(request.getListType());
-
         if (!userService.existsById(request.getUserId()) || !trailService.existsById(request.getTrailId())) {
             return ResponseEntity
                     .badRequest()
@@ -99,8 +98,17 @@ public class UserController {
         if (request.getListType().equals("Hiked")) {
 
             User user = userService.findById(request.getUserId());
-            user.addTrailToHikedList(trailService.findById(request.getTrailId()));
+            Trail trail = trailService.findById(request.getTrailId());
+
+            user.addTrailToHikedList(trail);
             userService.save(user);
+
+            if (request.getUserRating() > 0) {
+                trail.setRatings(trail.getRatings() + 1);
+                trail.setSumOfRatings(trail.getSumOfRatings() + request.getUserRating());
+                trail.setAvgRating();
+                trailService.save(trail);
+            }
 
             return ResponseEntity.ok(new MessageResponse("Trail added to hiked list"));
         }
@@ -113,10 +121,7 @@ public class UserController {
     @PostMapping("/remove-trail-from-user-list")
     public ResponseEntity<?> removeTrailFromUserList(@RequestBody RemoveTrailFromToHikeListRequest request) {
 
-        System.out.println("1" + request.getListType());
-
         if (!userService.existsById(request.getUserId()) || !trailService.existsById(request.getTrailId())) {
-            System.out.println("2");
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error encountered while adding trail to hike list"));
@@ -126,14 +131,12 @@ public class UserController {
 
         if (request.getListType().equals("To Hike")) {
             user.removeTrailFromToHikeList(trailService.findById(request.getTrailId()));
-            System.out.println("3");
         }
 
         else if (request.getListType().equals("Hiked"))
             user.removeTrailFromHikedList(trailService.findById(request.getTrailId()));
 
         else {
-            System.out.println("5");
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Invalid request"));

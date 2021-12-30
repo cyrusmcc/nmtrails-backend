@@ -12,9 +12,9 @@ public class AddTrailToHikeListRequest {
     private Long trailId;
 
     @NotNull
-    String listType;
+    private String listType;
 
-    int rating;
+    private int userRating;
 
     public Long getUserId() {
         return userId;
@@ -40,11 +40,11 @@ public class AddTrailToHikeListRequest {
         this.listType = listType;
     }
 
-    public int getRating() {
-        return rating;
+    public int getUserRating() {
+        return userRating;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setUserRating(int userRating) {
+        this.userRating = userRating;
     }
 }

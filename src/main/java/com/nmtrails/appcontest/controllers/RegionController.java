@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Set;
 
@@ -36,7 +37,7 @@ public class RegionController {
     }
 
     @GetMapping("/featured")
-    public RegionView featuredRegion() {
+    public RegionView featuredRegion() throws FileNotFoundException {
         return service.randomRegion();
     }
 }

@@ -14,5 +14,6 @@ import java.util.Optional;
 public interface RegionRepository extends JpaRepository<Region, Long> {
     Optional<Region> findById(Long id);
     Page<RegionView> findAllBy(Pageable pageable);
+    RegionView findByName(String name);
     long countAllBy();
 }

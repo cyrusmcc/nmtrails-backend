@@ -12,16 +12,14 @@ import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class TrailServiceImpl implements TrailService {
@@ -126,7 +124,8 @@ public class TrailServiceImpl implements TrailService {
         Map<String, Object> map = new HashMap<>();
 
         try {
-            map = om.readValue(json, new TypeReference<Map<String, Object>>() {});
+            map = om.readValue(json, new TypeReference<Map<String, Object>>() {
+            });
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -136,7 +135,6 @@ public class TrailServiceImpl implements TrailService {
 
         List<Object> items = (List<Object>) map.get("items");
         String link = (String) ((Map<String, Object>) items.get(0)).get("link");
-        System.out.println(link);
         return link;
     }
 
@@ -153,8 +151,30 @@ public class TrailServiceImpl implements TrailService {
 
         if (sliceResult.hasContent()) {
             return sliceResult.getContent();
-        }
-        else return new ArrayList<>();
+        } else return new ArrayList<>();
 
+    }
+
+    @Override
+    public List<Trail> getRandomTrails(int numRandom) {
+
+        List<Trail> randomTrails = new ArrayList<>();
+
+        for (int i = 0; i < numRandom; i++) {
+
+            long randomId = ThreadLocalRandom.current().nextLong(10);
+            Trail t = trailRepository.findById(randomId).get();
+
+            while (randomTrails.contains(t)) {
+                randomId = ThreadLocalRandom.current().nextLong(10);
+                if (trailRepository.existsById(randomId))
+                    t = trailRepository.findById(randomId).get();
+                else continue;
+            }
+
+            randomTrails.add(t);
+        }
+
+        return randomTrails;
     }
 }

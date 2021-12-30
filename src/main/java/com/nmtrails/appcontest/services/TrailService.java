@@ -20,4 +20,6 @@ public interface TrailService {
     void save(Trail trail);
 
     List<Trail> findAllByRatingsDesc(Integer pageNum, Integer pageSize);
+
+    List<Trail> getRandomTrails(int numRandom);
 }

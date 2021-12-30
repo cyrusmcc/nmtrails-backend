@@ -59,13 +59,21 @@ public class TrailController {
         return ResponseEntity.ok(trailService.findExtent(ids));
     }
 
-    @GetMapping("/popular-trails")
+    @GetMapping("/popular")
     public ResponseEntity<?> getPopularTrails(@RequestParam(required = false, defaultValue = "0") int page,
                                               @RequestParam(required = false, defaultValue = "5") int pageSize) {
 
         List<Trail> list = trailService.findAllByRatingsDesc(page, pageSize);
 
         return ResponseEntity.ok(list);
-        
     }
+
+    @GetMapping("/featured")
+    public ResponseEntity<?> getFeaturedTrails() {
+
+        return ResponseEntity.ok(trailService.getRandomTrails(3));
+    }
+
+
+
 }

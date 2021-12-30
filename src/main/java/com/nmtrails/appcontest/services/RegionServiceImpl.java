@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -35,11 +37,24 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public RegionView randomRegion() {
-        long records = repo.countAllBy();
 
-        long page = ThreadLocalRandom.current().nextLong(records);
-        PageRequest pr = PageRequest.of((int) page, 1);
+    public RegionView randomRegion() {
+
+        try {
+
+            Scanner scanner = new Scanner(new File("componentdata/featuredregions.txt"));
+            List<String> regionNames = new ArrayList<>();
+            while (scanner.hasNextLine()) {
+                regionNames.add(scanner.nextLine());
+            }
+
+            String random = regionNames.get(new Random().nextInt(regionNames.size()));
+            return repo.findByName(random);
+
+        } catch (FileNotFoundException e) {
+        }
+
+        PageRequest pr = PageRequest.of(1, 1);
         return repo.findAllBy(pr).toList().get(0);
     }
 }

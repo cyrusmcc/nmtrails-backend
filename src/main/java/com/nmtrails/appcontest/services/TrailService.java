@@ -18,4 +18,6 @@ public interface TrailService {
     Geometry findExtent(List<Long> ids);
 
     void save(Trail trail);
+
+    List<Trail> findAllByRatingsDesc(Integer pageNum, Integer pageSize);
 }

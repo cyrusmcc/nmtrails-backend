@@ -48,7 +48,14 @@ public class TrailController {
     }
 
     @GetMapping("/extent")
-    public Geometry getExtent(@RequestParam(defaultValue = "") List<Long> ids) {
-        return trailService.findExtent(ids);
+    public ResponseEntity<?> getExtent(@RequestParam(defaultValue = "") List<Long> ids) {
+
+        if (ids == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error encountered while retrieving map data"));
+        }
+
+        return ResponseEntity.ok(trailService.findExtent(ids));
     }
 }

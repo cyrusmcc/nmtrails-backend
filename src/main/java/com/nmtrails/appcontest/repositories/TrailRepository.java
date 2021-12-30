@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface TrailRepository extends JpaRepository<Trail, Long> {
 
     Optional<Trail> findById(Long id);
+
     boolean existsById(Long id);
 
     Page<Trail> findAllByNameLikeIgnoreCase(String nameLike, Pageable pageable);

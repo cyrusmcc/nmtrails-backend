@@ -1,6 +1,8 @@
 package com.nmtrails.appcontest.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,10 +20,15 @@ public class Trail {
     private String name;
 
     @Column
-    private float avgRating = 0;
+    @JsonIgnore
+    private int sumOfRatings = 0;
 
     @Column
+    @JsonIgnore
     private int ratings = 0;
+
+    @Column
+    private float avgRating = 0;
 
     @Column(length = 1000)
     private String imageUrl;
@@ -43,8 +50,12 @@ public class Trail {
         return name;
     }
 
-    public float getAvgRating() {
-        return avgRating;
+    public int getSumOfRatings() {
+        return sumOfRatings;
+    }
+
+    public void setSumOfRatings(int sumOfRatings) {
+        this.sumOfRatings = sumOfRatings;
     }
 
     public int getRatings() {
@@ -55,12 +66,19 @@ public class Trail {
         this.name = name;
     }
 
-    public void setAvgRating(float avgRating) {
-        this.avgRating = avgRating;
-    }
-
     public void setRatings(int ratings) {
         this.ratings = ratings;
+    }
+
+    public float setAvgRating() {
+        if (ratings > 0)
+            avgRating = (sumOfRatings * 5) / (ratings * 5);
+
+        return 0;
+    }
+
+    public float getAvgRating() {
+        return this.avgRating;
     }
 
     public Set<Segment> getSegments() {
@@ -80,4 +98,5 @@ public class Trail {
     public void setHasImage(boolean hasImage) {
         this.hasImage = hasImage;
     }
+
 }

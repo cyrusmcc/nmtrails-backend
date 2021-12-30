@@ -70,6 +70,9 @@ public class TrailServiceImpl implements TrailService {
 
     @Override
     public Geometry findExtent(List<Long> ids) {
+
+        if (ids == null || ids.size() == 0) throw new IllegalArgumentException();
+
         WKTReader reader = new WKTReader(factory);
         try {
             return reader.read(segmentRepository.findTrailsExtent(ids));
@@ -135,5 +138,9 @@ public class TrailServiceImpl implements TrailService {
         String link = (String) ((Map<String, Object>) items.get(0)).get("link");
         System.out.println(link);
         return link;
+    }
+
+    public void save(Trail trail) {
+        trailRepository.save(trail);
     }
 }

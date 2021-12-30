@@ -95,8 +95,8 @@ def create_database(args):
 
 def add_trails_to_db(trails, cursor, regionid):
     for trail in trails:
-        query = """INSERT INTO trails (avg_rating, name, ratings, region_region_id)
-                   VALUES (0, %s, 0, %s) RETURNING trail_id"""
+        query = """INSERT INTO trails (sum_of_ratings, name, ratings, avg_rating, region_region_id)
+                   VALUES (0, %s, 0, 0, %s) RETURNING trail_id"""
         cursor.execute(query, [trail, regionid])
 
         trail_id = cursor.fetchone()[0]
@@ -133,3 +133,6 @@ if __name__ == "__main__":
         geojson = get_geojson(region)
         trails = extract_trails(region, geojson)
         add_trails_to_db(trails, cur, rid)
+
+    print("Finished initializing database.")
+

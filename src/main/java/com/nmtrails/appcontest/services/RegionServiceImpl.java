@@ -4,7 +4,6 @@ import com.nmtrails.appcontest.entities.Region;
 import com.nmtrails.appcontest.entities.RegionView;
 import com.nmtrails.appcontest.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class RegionServiceImpl implements RegionService {

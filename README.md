@@ -21,15 +21,27 @@ Perhaps the greatest source of recreation in New Mexico comes through our expans
 
 ## Showcase
 
+https://user-images.githubusercontent.com/61042997/147840327-c4be9332-6b42-4a50-bdcd-27f7c8a288e3.mp4
+
+
+[Backup youtube video](https://www.youtube.com/watch?v=tbKLa_n_eaM)
+
 ![pretty1](https://user-images.githubusercontent.com/61042997/147839285-2be64c09-0970-4fa2-8cd5-b4ada471e47c.png)
+
 ![pretty2](https://user-images.githubusercontent.com/61042997/147839287-123d0fef-35bc-4ab2-90d2-3b23fa6e2b71.png)
-
-
 
 
 ## Build instructions
 
 ## Extra credit
+[Link to Adobe XD prototype presentation](https://xd.adobe.com/view/438468a9-484e-4074-8e07-e363268aa01b-16d7/?fullscreen&hints=off)
 
+**Open Data Sources**
+
+[USFS Geospatial Dataset](https://data-usfs.hub.arcgis.com/datasets/national-forest-system-trails-feature-layer/explore?location=34.853834%2C-105.069815%2C6.32)
+
+[NPS Open Trail Dataset](https://public-nps.opendata.arcgis.com/search?collection=Dataset&q=trail)
+
+[iNaturalist Observation API](https://api.inaturalist.org/v1/docs/)
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

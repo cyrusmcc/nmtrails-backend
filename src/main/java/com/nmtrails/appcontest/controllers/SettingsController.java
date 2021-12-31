@@ -168,7 +168,7 @@ public class SettingsController {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
 
             if (userService.existsByEmail(emailChangeRequest.getEmail())) {
-                log.info("User attempted to change email but email already in use");
+                log.info("User attempted to change email but the email provided is already in use");
                 return ResponseEntity
                         .badRequest()
                         .body(new MessageResponse("Error: Email already in use"));
@@ -205,7 +205,7 @@ public class SettingsController {
             log.info("User requested an email change");
 
             return ResponseEntity.ok(new MessageResponse("A confirmation email will be sent to your new address. Click" +
-                    " the link provided link to update your email."));
+                    " the link provided to update your email."));
 
         }
 

@@ -71,7 +71,7 @@ public class TrailController {
     @GetMapping("/featured")
     public ResponseEntity<?> getFeaturedTrails() {
 
-        return ResponseEntity.ok(trailService.getRandomTrails(3));
+        return ResponseEntity.ok(trailService.getFeaturedTrails());
     }
 
 

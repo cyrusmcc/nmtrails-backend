@@ -21,5 +21,5 @@ public interface TrailService {
 
     List<Trail> findAllByRatingsDesc(Integer pageNum, Integer pageSize);
 
-    List<Trail> getRandomTrails(int numRandom);
+    List<Trail> getFeaturedTrails();
 }

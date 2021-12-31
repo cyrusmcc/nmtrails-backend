@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -156,25 +158,38 @@ public class TrailServiceImpl implements TrailService {
     }
 
     @Override
-    public List<Trail> getRandomTrails(int numRandom) {
+    public List<Trail> getFeaturedTrails() {
 
-        List<Trail> randomTrails = new ArrayList<>();
+        List<Trail> trails = new ArrayList<>();
 
-        for (int i = 0; i < numRandom; i++) {
+        try {
 
-            long randomId = ThreadLocalRandom.current().nextLong(10);
-            Trail t = trailRepository.findById(randomId).get();
-
-            while (randomTrails.contains(t)) {
-                randomId = ThreadLocalRandom.current().nextLong(10);
-                if (trailRepository.existsById(randomId))
-                    t = trailRepository.findById(randomId).get();
-                else continue;
+            Scanner scanner = new Scanner(new File("componentdata/featuredtrails.txt"));
+            while (scanner.hasNextLine()) {
+                trails.add(trailRepository.findByName(scanner.nextLine()));
             }
 
-            randomTrails.add(t);
-        }
+            return trails;
 
-        return randomTrails;
+         // fallback if fnfe
+        } catch (FileNotFoundException e) {
+
+            trails = new ArrayList<>();
+
+            for (int i = 0; i < 3; i++) {
+
+                long randomId = ThreadLocalRandom.current().nextLong(10);
+                Trail t = trailRepository.findById(randomId).get();
+
+                while (trails.contains(t)) {
+                    randomId = ThreadLocalRandom.current().nextLong(10);
+                    if (trailRepository.existsById(randomId))
+                        t = trailRepository.findById(randomId).get();
+                    else continue;
+                }
+                trails.add(t);
+            }
+            return trails;
+        }
     }
 }

@@ -2,107 +2,145 @@
     {
         "type": "usfs",
         "name": "Cibola National Forest - Sandia Mountains",
-        "bounds": [[-106.518295, 35.301288], [-106.018655, 34.501525]]
+        "bounds": [[-106.518295, 35.301288], [-106.018655, 34.501525]],
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/b/b9/Sandia_Mountains_Albuquerque_NM.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/1/1c/6.18.08SandiaMountainsByLuigiNovi85.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/8/8b/Sandia_mountains_meadow.jpg"]
     },
     {
         "type": "usfs",
         "name": "Lincoln National Forest",
-        "bounds": [[-106.122402, 33.965724], [-105.050678, 32.609341]]
+        "bounds": [[-106.122402, 33.965724], [-105.050678, 32.609341]],
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/5/5b/Lincoln_National_Forest_%2815560393596%29.jpg",
+			     "https://upload.wikimedia.org/wikipedia/commons/b/ba/Lincoln_National_Forest_3_%282%29.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/a/aa/Lincoln_National_Forest_%2815584070555%29.jpg"]
     },
     {
         "type": "usfs",
         "name": "Cibola National Forest - Grants",
-        "bounds": [[-108.604409, 35.682311], [-107.186782, 34.821349]]
+        "bounds": [[-108.604409, 35.682311], [-107.186782, 34.821349]],
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/2/21/MtTaylor_USFS.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/5/5e/Looking_north-north-east_towards_La_Mosca_Lookout_from_near_the_summit_of_Mount_Taylor%2C_New_Mexico.jpg"]
     },
     {
         "type": "usfs",
         "name": "Gila National Forest",
-        "bounds": [[-109.047824, 34.269157], [-107.657248, 32.744669]]
+        "bounds": [[-109.047824, 34.269157], [-107.657248, 32.744669]],
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/c/c2/A_beaver_dam_spans_a_section_of_the_Middle_Fork_of_the_Gila_River.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/a/a6/September_2013_Flooding_on_Reserve_Ranger_District%2C_Gila_National_Forest_%289777114475%29.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/7/75/W._Fk_of_Mogollon_crk%2C_Jeanies_waterfall%2C_Gila_National_Forest_%288727134762%29.jpg"]
     },
     {
         "type": "usfs",
         "name": "Cibola National Forest - Soccoro",
-        "bounds": [[-107.657248, 34.441675], [-106.763217, 33.442932]]
+        "bounds": [[-107.657248, 34.441675], [-106.763217, 33.442932]],
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/0/0e/Magdalena_Observatory_1.JPG"]
     },
     {
         "type": "usfs",
         "name": "Cibola National Forest - Gallinas Peak",
-        "bounds": [[-106.051729, 34.493373], [-105.528732, 34.090442]]
+        "bounds": [[-106.051729, 34.493373], [-105.528732, 34.090442]],
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/0/0e/Magdalena_Observatory_1.JPG"]
     },
     {
         "type": "usfs",
         "name": "Santa Fe National Forest - West",
-        "bounds": [[-107.052398, 36.327546], [-106.080095,35.526749]]
+        "bounds": [[-107.052398, 36.327546], [-106.080095,35.526749]],
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/7/78/Looking_down_Caja_del_Rio_Canyon_%28known_locally_as_Diablo_Canyon%29_in_Santa_Fe_National_Forest%2C_New_Mexico.jpg",
+			     "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Santa_Fe_National_Forest_%283902251196%29.jpg/800px-Santa_Fe_National_Forest_%283902251196%29.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/1/12/Looking_South_from_Hermit%27s_Peak%2C_Pecos_Wilderness%2C_Santa_Fe_National_Forest.jpg"]
     },
     {
         "type": "usfs",
         "name": "Carson National Forest - West",
-        "bounds": [[-107.407682, 37.002759], [-105.885108, 36.327546]]
+        "bounds": [[-107.407682, 37.002759], [-105.885108, 36.327546]],
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/7/75/W._Fk_of_Mogollon_crk%2C_Jeanies_waterfall%2C_Gila_National_Forest_%288727134762%29.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/b/b1/Carson_National_Forest_-_2021-01-20.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/8/84/Abies_concolor_Carson_National_Forest.jpg"]
     },
     {
         "type": "usfs",
         "name": "Lincoln National Forest - Brokeoff Mountains",
-        "bounds": [[-105.225467, 32.611971], [-104.534890, 32.008782]]
+        "bounds": [[-105.225467, 32.611971], [-104.534890, 32.008782]],
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/5/5b/Lincoln_National_Forest_%2815560393596%29.jpg",
+			     "https://upload.wikimedia.org/wikipedia/commons/b/ba/Lincoln_National_Forest_3_%282%29.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/a/aa/Lincoln_National_Forest_%2815584070555%29.jpg"]
     },
     {
         "type": "usfs",
         "name": "Santa Fe National Forest - East",
-        "bounds": [[-106.080095, 36.004420], [-105.114293, 35.412287]]
+        "bounds": [[-106.080095, 36.004420], [-105.114293, 35.412287]],
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/7/78/Looking_down_Caja_del_Rio_Canyon_%28known_locally_as_Diablo_Canyon%29_in_Santa_Fe_National_Forest%2C_New_Mexico.jpg",
+			     "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Santa_Fe_National_Forest_%283902251196%29.jpg/800px-Santa_Fe_National_Forest_%283902251196%29.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/1/12/Looking_South_from_Hermit%27s_Peak%2C_Pecos_Wilderness%2C_Santa_Fe_National_Forest.jpg"]
     },
     {
         "type": "usfs",
         "name": "Carson National Forest - East",
-        "bounds": [[-105.885108, 36.927287], [-104.861873, 36.004420]]
+        "bounds": [[-105.885108, 36.927287], [-104.861873, 36.004420]],
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/7/75/W._Fk_of_Mogollon_crk%2C_Jeanies_waterfall%2C_Gila_National_Forest_%288727134762%29.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/b/b1/Carson_National_Forest_-_2021-01-20.jpg",
+				 "https://upload.wikimedia.org/wikipedia/commons/8/84/Abies_concolor_Carson_National_Forest.jpg"]
     },
     {
         "type": "nps",
         "name": "Aztec Ruins National Monument",
-        "dataset_id": "8f44ae991ea04f3e8aaf5b53a428aa5e_0"
+        "dataset_id": "8f44ae991ea04f3e8aaf5b53a428aa5e_0",
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/9/9c/Aztec_Ruins_National_Monument_AZRU2835.jpg"]
     },
     {
         "type": "nps",
         "name": "Bandelier National Monument",
-
-        "dataset_id": "d9c4a36b97f34075bce23faf4a2512dc_0"
+        "dataset_id": "d9c4a36b97f34075bce23faf4a2512dc_0",
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/1/17/Tsherige_otowi_bandelier.jpg",
+		 		 "https://upload.wikimedia.org/wikipedia/commons/6/62/Bandelier_trail.JPG"]
     },
     {
         "type": "nps",
         "name": "Capulin Volcano National Monument",
-        "dataset_id": "c91d53d80f8742bcbddc0f351bb9669c_0"
+        "dataset_id": "c91d53d80f8742bcbddc0f351bb9669c_0",
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/8/8e/Capulin_Volcano_National_Monument%2C_NM.JPG"]
     },
     {
         "type": "nps",
         "name": "Carlsbad Caverns National Park",
-        "dataset_id": "e1b6ecd423b04d1289e5e926e17509f1_0"
+        "dataset_id": "e1b6ecd423b04d1289e5e926e17509f1_0",
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/b/be/Carlsbad_Caverns_Landscape_213-214mod.jpg"]
     },
     {
         "type": "nps",
         "name": "El Malpais National Monument",
-        "dataset_id": "1657f0762a794db7a98ec90fb17498d7_0"
+        "dataset_id": "1657f0762a794db7a98ec90fb17498d7_0",
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/5/57/El_Malpais_national_monument.jpg"]
     },
     {
         "type": "nps",
         "name": "El Morro National Monument",
-        "dataset_id": "c43cc5464e28438d894a789bda97c97a_0"
+        "dataset_id": "c43cc5464e28438d894a789bda97c97a_0",
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/a/ad/Crossing_the_top_of_El_Morro.jpg"]
     },
     {
         "type": "nps",
         "name": "Pecos National Historic Park",
-        "dataset_id": "8acf647372b9419b8ce8f88aedb6e8e0_0"
+        "dataset_id": "8acf647372b9419b8ce8f88aedb6e8e0_0",
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/6/6c/Pecos_National_Historic_Park.jpg"]
     },
     {
         "type": "nps",
         "name": "Salinas Pueblo Missions National Monument",
-        "dataset_id": "379710fd97514332a5b5705c34301240_0"
+        "dataset_id": "379710fd97514332a5b5705c34301240_0",
+		"imgs": [""]
     },
     {
         "type": "nps",
         "name": "Valles Caldera National Preserve",
-        "dataset_id": "3e9fb9447c314ef693230cbc334c1bdb_0"
+        "dataset_id": "3e9fb9447c314ef693230cbc334c1bdb_0",
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/0/0f/On_a_grassy_slope_overlooking_the_Valles_Caldera.jpg"]
     },
     {
         "type": "nps",
         "name": "White Sands National Park",
-        "dataset_id": "8e819e4e850349ce8f7d37f64597d017_0"
+        "dataset_id": "8e819e4e850349ce8f7d37f64597d017_0",
+		"imgs": ["https://upload.wikimedia.org/wikipedia/commons/8/8c/WhiteSandsScene.JPG"]
     }
 ]

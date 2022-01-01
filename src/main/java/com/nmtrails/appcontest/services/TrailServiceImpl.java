@@ -50,7 +50,7 @@ public class TrailServiceImpl implements TrailService {
         Optional<Trail> trail = trailRepository.findById(id);
         if (trail.isPresent()) {
             Trail t = trail.get();
-            lazyLoadImageUrl(t);
+            //lazyLoadImageUrl(t);
             return t;
         }
         throw new RuntimeException("Trail not found.");
@@ -61,7 +61,7 @@ public class TrailServiceImpl implements TrailService {
         String nameLike = String.format("%%%s%%", name);
         List<Trail> result = trailRepository.findAllByNameLikeIgnoreCase(nameLike, pageable).toList();
         for (Trail t : result) {
-            lazyLoadImageUrl(t);
+            //lazyLoadImageUrl(t);
         }
         return result;
     }

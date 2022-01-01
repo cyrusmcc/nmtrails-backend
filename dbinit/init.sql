@@ -7,7 +7,8 @@ CREATE TABLE trails (
     name varchar(255),
     region_region_id int8,
     ratings int4,
-    has_image boolean DEFAULT false
+    has_image boolean DEFAULT false,
+	image_url varchar(1000)
 );
 
 CREATE TABLE segments (

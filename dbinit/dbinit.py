@@ -3,18 +3,20 @@ from psycopg2 import sql
 import requests
 import json
 import argparse
+import random
 
 USFS_API_FORMAT_STR = open("usfs.txt").read()
 
 class Region:
-    def __init__(self, name, name_key):
+    def __init__(self, name, name_key, imgs):
         self.name = name
         self.name_key = name_key
+        self.imgs = imgs
 
 
 class NPSRegion(Region):
-    def __init__(self, name, dataset_id):
-        super().__init__(name, "TRLNAME")
+    def __init__(self, name, dataset_id, imgs):
+        super().__init__(name, "TRLNAME", imgs)
         self.dataset_id = dataset_id
 
     def getAPIUrl(self):
@@ -23,8 +25,8 @@ class NPSRegion(Region):
 
 class USFSRegion(Region):
 
-    def __init__(self, name, bounds):
-        super().__init__(name, "TRAIL_NAME")
+    def __init__(self, name, bounds, imgs):
+        super().__init__(name, "TRAIL_NAME", imgs)
         self.bounds = bounds
 
     def getAPIUrl(self):
@@ -40,11 +42,11 @@ def load_regions(fp):
     for r in regions_json:
         if r["type"] == "nps":
             regions.append(NPSRegion(
-                r["name"], r["dataset_id"]
+                r["name"], r["dataset_id"], r["imgs"]
             ))
         elif r["type"] == "usfs":
             regions.append(USFSRegion(
-                r["name"], r["bounds"]
+                r["name"], r["bounds"], r["imgs"]
             ))
     return regions
 
@@ -93,11 +95,12 @@ def create_database(args):
     cur.close()
     conn.close()
 
-def add_trails_to_db(trails, cursor, regionid):
+def add_trails_to_db(trails, cursor, regionid, imgs):
     for trail in trails:
-        query = """INSERT INTO trails (sum_of_ratings, name, ratings, avg_rating, region_region_id)
-                   VALUES (0, %s, 0, 0, %s) RETURNING trail_id"""
-        cursor.execute(query, [trail, regionid])
+        img = random.choice(imgs)
+        query = """INSERT INTO trails (sum_of_ratings, name, ratings, avg_rating, region_region_id, image_url)
+                   VALUES (0, %s, 0, 0, %s, %s) RETURNING trail_id"""
+        cursor.execute(query, [trail, regionid, img])
 
         trail_id = cursor.fetchone()[0]
         for segment in trails[trail]:
@@ -132,7 +135,7 @@ if __name__ == "__main__":
         rid = add_region_to_db(region, cur)
         geojson = get_geojson(region)
         trails = extract_trails(region, geojson)
-        add_trails_to_db(trails, cur, rid)
+        add_trails_to_db(trails, cur, rid, region.imgs)
 
     print("Finished initializing database.")
 

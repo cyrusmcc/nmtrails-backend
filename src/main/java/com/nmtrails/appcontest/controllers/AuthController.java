@@ -55,6 +55,10 @@ public class AuthController {
         this.refreshTokenService = refreshTokenService;
     }
 
+    /**
+     * Authenticates user's login credentials from request {@link LoginRequest} & returns the user's account details alongside
+     * an access token (JWT format) and a refresh token for refreshing the AT upon expiration
+     * */
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -81,6 +85,10 @@ public class AuthController {
                 roles));
     }
 
+    /**
+     * Provided a user's registration request {@link SignupRequest}, verify that username & email,
+     * create new user entry and return successful status.
+     * */
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
 
@@ -106,6 +114,11 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully."));
     }
 
+    /**
+     * When a user's access token is invalid or expired, a {@link TokenRefreshRequest} is sent
+     * from the client and if the user's refresh token is valid, a new access token (JWT format)
+     * is generated and returned to the user.
+     * * */
     @PostMapping("/refreshToken")
     public ResponseEntity<?> refreshToken(@Valid @RequestBody TokenRefreshRequest request) {
 

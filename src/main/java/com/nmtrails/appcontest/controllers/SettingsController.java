@@ -7,7 +7,6 @@ import com.nmtrails.appcontest.payload.responses.MessageResponse;
 import com.nmtrails.appcontest.security.JWT.JwtUtils;
 import com.nmtrails.appcontest.services.MailService;
 import com.nmtrails.appcontest.services.UserService;
-import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +46,10 @@ public class SettingsController {
     }
 
 
+    /**
+     * When user submits a lost password reset request, verify that provided email is valid
+     * then generate a URL with an embedded JWT to user's email.
+     * */
     @PostMapping("/forgot-password")
     public ResponseEntity<?> requestLostPasswordReset (@Valid @RequestBody LostPasswordResetRequest resetRequest,
                                                        HttpServletRequest request) {
@@ -86,6 +89,10 @@ public class SettingsController {
                 " in our system."));
     }
 
+    /**
+     * When a user receives and opens their JWT containing reset link, decrypt the JWT and verify that the
+     * request is valid, then return status.
+     * */
     @PostMapping("/validate-password-reset-token")
     public ResponseEntity<?> validatePasswordResetToken(@Valid @RequestBody ValidatePasswordResetTokenRequest request) {
 
@@ -101,6 +108,40 @@ public class SettingsController {
 
     }
 
+    /**
+     * When a reset password JWT has been verified, a change password form is presented. Upon receiving the
+     * password change request containing the new password, check if new password id valid then update
+     * user's password.
+     * */
+    @PostMapping("/handle-password-reset")
+    public ResponseEntity<?> handlePasswordReset(@Valid @RequestBody HandlePasswordResetRequest handlePassResetReq) {
+
+            if (!userService.existsById(handlePassResetReq.getUserId())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Invalid password reset request, please try again"));
+            }
+
+            User user = userService.findById(handlePassResetReq.getUserId());
+            String userSecret = user.getPassword() + "-" + user.getUserJoinDate();
+
+            if (jwtUtils.validateJwtToken(handlePassResetReq.getToken(), userSecret)) {
+
+                userService.updatePassword(user, handlePassResetReq.getPassword());
+                log.info("Handling user password reset");
+                return ResponseEntity.ok(new MessageResponse("Password successfully changed."));
+
+            }
+
+        return ResponseEntity
+                .badRequest()
+                .body(new MessageResponse("An issue was encountered while trying to reset your password."));
+    }
+
+    /**
+     * When a wants to change password while logged in, verify that both current and new passwords
+     * are valid and then update user's password.
+     * */
     @PostMapping("/change-password")
     public ResponseEntity<?> changePasswordRequest(@Valid @RequestBody PasswordChangeRequest request) {
 
@@ -135,31 +176,9 @@ public class SettingsController {
 
     }
 
-    @PostMapping("/handle-password-reset")
-    public ResponseEntity<?> handlePasswordReset(@Valid @RequestBody HandlePasswordResetRequest handlePassResetReq) {
-
-            if (!userService.existsById(handlePassResetReq.getUserId())) {
-                return ResponseEntity
-                        .badRequest()
-                        .body(new MessageResponse("Invalid password reset request, please try again"));
-            }
-
-            User user = userService.findById(handlePassResetReq.getUserId());
-            String userSecret = user.getPassword() + "-" + user.getUserJoinDate();
-
-            if (jwtUtils.validateJwtToken(handlePassResetReq.getToken(), userSecret)) {
-
-                userService.updatePassword(user, handlePassResetReq.getPassword());
-                log.info("Handling user password reset");
-                return ResponseEntity.ok(new MessageResponse("Password successfully changed."));
-
-            }
-
-        return ResponseEntity
-                .badRequest()
-                .body(new MessageResponse("An issue was encountered while trying to reset your password."));
-    }
-
+    /**
+     * When a user requests an email change, generate a JWT embedded URL and send to user's newly provided email.
+     * */
     @PostMapping("/email-change-request")
     public ResponseEntity<?> emailChangeRequest(@Valid @RequestBody EmailChangeRequest emailChangeRequest,
                                                 HttpServletRequest request) {
@@ -216,6 +235,10 @@ public class SettingsController {
 
     }
 
+    /**
+     * When user opens JWT embedded URL from the new email, decrypt the JWT and ensure that the request is valid,
+     * then update the user's email.
+     * */
     @PostMapping("/handle-email-change")
     public ResponseEntity<?> handleEmailChange(@Valid @RequestBody HandleChangeEmailRequest request) {
 

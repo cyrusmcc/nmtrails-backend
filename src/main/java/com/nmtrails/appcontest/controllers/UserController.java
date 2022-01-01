@@ -25,6 +25,9 @@ public class UserController {
         this.trailService = trailService;
     }
 
+    /**
+     * Given id, check if valid and return user object
+     * */
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
 
@@ -38,6 +41,10 @@ public class UserController {
 
     }
 
+    /**
+     * Given user ID and list type (to-hike or finished hikes list), return tarils
+     * belonging to the user's list
+     * */
     @GetMapping("/user-trail-list")
     public ResponseEntity<?> getUserTrailList(@RequestParam Long userId,
                                               @RequestParam String listType) {
@@ -64,6 +71,9 @@ public class UserController {
 
     }
 
+    /**
+     * Given id, check if valid and return user object
+     * */
     @GetMapping("/has-trail-in-to-hike-list")
     public ResponseEntity<?> hasTrailInToHikeList(@RequestParam Long userId,
                                                 @RequestParam Long trailId) {
@@ -77,6 +87,10 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(userId).hasTrailInToHikeList(trailService.findById(trailId)));
     }
 
+    /**
+     * When a request to add a trail to user's hike list is made, verify that user and trail id are valid,
+     * and that user does not have trail in list already, then add to list.
+     * */
     @PostMapping("/add-trail-to-hike-list")
     public ResponseEntity<?> addTrailToHikeList(@RequestBody AddTrailToHikeListRequest request) {
 
@@ -118,6 +132,10 @@ public class UserController {
                 .body(new MessageResponse("Error encountered while adding to list"));
     }
 
+    /**
+     * When a request to remove a trail to user's hike list is made, verify that user and trail id are valid,
+     * and that user has trail in list, then remove to list.
+     * */
     @PostMapping("/remove-trail-from-user-list")
     public ResponseEntity<?> removeTrailFromUserList(@RequestBody RemoveTrailFromToHikeListRequest request) {
 

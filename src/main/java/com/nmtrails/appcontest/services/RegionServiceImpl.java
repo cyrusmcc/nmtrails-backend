@@ -22,6 +22,9 @@ public class RegionServiceImpl implements RegionService {
         this.repo = repo;
     }
 
+    /**
+     * Return region given a region id
+     * */
     @Override
     public Region findById(Long id) {
         Optional<Region> region = repo.findById(id);
@@ -29,13 +32,19 @@ public class RegionServiceImpl implements RegionService {
         else throw new RuntimeException("Region not found.");
     }
 
+    /**
+     * Return all region entries given {@link Pageable} object
+     * */
     @Override
     public List<RegionView> findAll(Pageable pageable) {
         return repo.findAllBy(pageable).toList();
     }
 
+    /**
+     * Using a text file containing region names, generate and return random region. In case of error,
+     * query first region entry from dB and return.
+     * */
     @Override
-
     public RegionView randomRegion() {
 
         try {

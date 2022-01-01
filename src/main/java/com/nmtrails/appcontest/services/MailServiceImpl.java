@@ -23,6 +23,9 @@ public class MailServiceImpl implements MailService {
         this.templateEngine = templateEngine;
     }
 
+    /**
+     * Given {@link Mail} object, populate email context with contents and send email
+     * */
     @Override
     public void sendEmail(Mail mail) {
         try {

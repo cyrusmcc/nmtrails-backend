@@ -26,12 +26,40 @@ https://user-images.githubusercontent.com/61042997/147840327-c4be9332-6b42-4a50-
 
 [Backup youtube video](https://www.youtube.com/watch?v=tbKLa_n_eaM)
 
-![pretty1](https://user-images.githubusercontent.com/61042997/147839285-2be64c09-0970-4fa2-8cd5-b4ada471e47c.png)
+![pretty1](https://user-images.githubusercontent.com/61042997/147841366-d9bb4957-27f6-417b-986b-7204171186bb.png)
 
 ![pretty2](https://user-images.githubusercontent.com/61042997/147839287-123d0fef-35bc-4ab2-90d2-3b23fa6e2b71.png)
 
 
 ## Build instructions
+
+### Backend
+
+### Frontend
+# frontend
+
+**Prerequisites to build**
+
+You must ensure that you have node.js and npm installed prior to building the project.
+The versions used for development (and thus can be verified as compatible) are
+- Node V14.15.5
+- Npm V6.14.11
+
+**Project setup**
+```
+npm install
+```
+
+**Compiles and hot-reloads for development**
+```
+npm run serve
+```
+
+**Compiles and minifies for production**
+```
+npm run build
+```
+
 
 ## Extra credit
 [Link to Adobe XD prototype presentation](https://xd.adobe.com/view/438468a9-484e-4074-8e07-e363268aa01b-16d7/?fullscreen&hints=off)

@@ -78,7 +78,7 @@ public class SettingsController {
         model.put("user", user);
         model.put("signature", "a signature here");
         // replace 3000 w/ request.getServerPort() when done testing;
-        String url = request.getScheme() + "://" + request.getServerName() + ":" + 3000;
+        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         model.put("resetUrl", url + "/reset-password/" + user.getId() + "/" + token);
         mail.setModel(model);
         mailService.sendEmail(mail);
@@ -216,7 +216,7 @@ public class SettingsController {
             model.put("user", user);
             model.put("signature", "a signature here");
             // replace 3000 w/ request.getServerPort() when done testing;
-            String url = request.getScheme() + "://" + request.getServerName() + ":" + 3000;
+            String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
             model.put("resetUrl", url + "/email-change-confirmation/" + user.getId() + "/" + token);
             mail.setModel(model);
             mailService.sendEmail(mail);

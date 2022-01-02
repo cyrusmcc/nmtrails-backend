@@ -47,6 +47,10 @@ public class TrailServiceImpl implements TrailService {
         this.gEngineId = env.getProperty("google.engine_id");
     }
 
+
+    /**
+     * Return region given a region id
+     * */
     @Override
     public Trail findById(Long id) {
         Optional<Trail> trail = trailRepository.findById(id);
@@ -58,6 +62,10 @@ public class TrailServiceImpl implements TrailService {
         throw new RuntimeException("Trail not found.");
     }
 
+    /**
+     * Return all region entries given {@link Pageable} object. Optionally,
+     * if user provides a search term, return matching trails
+     * */
     @Override
     public List<Trail> findAllByNameLike(String name, Pageable pageable) {
         String nameLike = String.format("%%%s%%", name);
@@ -68,6 +76,9 @@ public class TrailServiceImpl implements TrailService {
         return result;
     }
 
+    /**
+     * Given a list of ids, return their bounding box
+     * * */
     @Override
     public Geometry findExtent(List<Long> ids) {
 
@@ -77,7 +88,6 @@ public class TrailServiceImpl implements TrailService {
         try {
             return reader.read(segmentRepository.findTrailsExtent(ids));
         } catch (ParseException e) {
-            //TODO log
             e.printStackTrace();
         }
         throw new RuntimeException("Could not parse geometry");
@@ -88,7 +98,7 @@ public class TrailServiceImpl implements TrailService {
         return trailRepository.existsById(id);
     }
 
-    /*
+    /**
     If the trail doesn't have an image yet, attempt to fetch one from the
     Google search API.
      */
@@ -116,7 +126,7 @@ public class TrailServiceImpl implements TrailService {
                 }).block();
 
         String link = getLinkFromJson(clientResponse);
-        if (link.length() <= 1000) trail.setImageUrl(link);
+        if (link != null && link.length() <= 1000) trail.setImageUrl(link);
         trail.setHasImage(true);
         this.trailRepository.save(trail);
     }
@@ -130,6 +140,7 @@ public class TrailServiceImpl implements TrailService {
             });
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            return null;
         }
 
         // if the request resulted in an error, don't bother loading an image url
@@ -144,6 +155,10 @@ public class TrailServiceImpl implements TrailService {
         trailRepository.save(trail);
     }
 
+    /**
+     * Create and return {@link Pageable} object given page number and size containing trails
+     * sorted by total number of ratings.
+     * * */
     @Override
     public List<Trail> findAllByRatingsDesc(Integer pageNum, Integer pageSize) {
 
@@ -157,6 +172,11 @@ public class TrailServiceImpl implements TrailService {
 
     }
 
+    /**
+     * Return list of featured trails provided by a text file. If fnfe,
+     * generate and return a random list of trails contained in first 10 dB entries
+     * for trails.
+     * * */
     @Override
     public List<Trail> getFeaturedTrails() {
 

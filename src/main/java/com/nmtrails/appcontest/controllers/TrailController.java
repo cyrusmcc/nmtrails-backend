@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * API Documentation:
+ * @see <a href="https://nmtrails-api-docs.readthedocs.io/en/latest/">here</a>
+ * */
 @RestController
 @RequestMapping("/api/trails")
 public class TrailController {
@@ -27,6 +31,10 @@ public class TrailController {
         this.trailService = trailService;
     }
 
+    /**
+     * Given page and page size, retrieve appropriate trails. Optionally, if a user wants to search
+     * for specific trails and provides a name and return the results.
+     * * */
     @GetMapping("/")
     public List<Trail> listTrails(@RequestParam(required = false, defaultValue = "") String name,
                                   @RequestParam(required = false, defaultValue = "0") int page,
@@ -37,16 +45,26 @@ public class TrailController {
         return trailService.findAllByNameLike(name, pr);
     }
 
+    /**
+     * Find trail by specified id
+     * * */
     @GetMapping("/{id}")
     public Trail getTrail(@PathVariable Long id) {
         return trailService.findById(id);
     }
 
+
+    /**
+     * Given a trail's id, retrieve its coordinate segments for map population
+     * * */
     @GetMapping("/{id}/segments")
     public Set<Segment> getTrailSegments(@PathVariable Long id) {
         return trailService.findById(id).getSegments();
     }
 
+    /**
+     * Given a list of ids, return their bounding box
+     * * */
     @GetMapping("/extent")
     public ResponseEntity<?> getExtent(@RequestParam(defaultValue = "") List<Long> ids) {
 
@@ -59,6 +77,9 @@ public class TrailController {
         return ResponseEntity.ok(trailService.findExtent(ids));
     }
 
+    /**
+     * Given page and page size, return a list of popular trails which are sorted by total number of ratings
+     * * */
     @GetMapping("/popular")
     public ResponseEntity<?> getPopularTrails(@RequestParam(required = false, defaultValue = "0") int page,
                                               @RequestParam(required = false, defaultValue = "5") int pageSize) {
@@ -68,6 +89,9 @@ public class TrailController {
         return ResponseEntity.ok(list);
     }
 
+    /**
+     * Retrieve random trails and return as featured trails
+     * * */
     @GetMapping("/featured")
     public ResponseEntity<?> getFeaturedTrails() {
 

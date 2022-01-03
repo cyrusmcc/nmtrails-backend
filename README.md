@@ -45,8 +45,6 @@ You must ensure that you have Java & Maven installed & their respective environm
 **Project setup**
 >In order to initialize the database with our open data sources you must run the dbinit.py script found in the dbinit directory. This can be done by running python dbinit.py "yourDBusername" "yourDBPassword". The required dependencies to run the script can be found in the requirements text file & installed with pip.
 
-**Compiles and hot-reloads for development**
-
 **Compile & run project for development**
 ```
 mvn spring-boot:run, or utilize Intellij's run feature

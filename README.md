@@ -2,6 +2,10 @@
 
 [Link to live site here](https://www.nmtrails.com/)
 
+> Test username: user
+> 
+> Test password: password
+
 Perhaps the greatest source of recreation in New Mexico comes through our expansive access to the outdoors and the adventures that come along with it. Hiking is one of the best ways in which we can engage and explore with our surrounding environments.  NMTrails aims to provide a useful state-focused resource for the local & tourist community of outdoor enthusiasts through offering a platform which allows for finding and researching interesting hiking trails in the various parks and regions in New Mexico. Through the use of open data, we can provide users with access to over 900 hiking trails spanning 21 different regions here in New Mexico. Users can browse and search through trails, learn about recent nature sightings on each trail, add trails to hiking wish-lists as well as leave ratings on the trails they've completed.
 
 
